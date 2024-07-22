@@ -13,18 +13,18 @@ class House:
     def __len__(self):
         return self.number_of_floors
 
-
     def __str__(self):
-        a = f'Название:', {self.name},'количество этажей:', {self.number_of_floors}
-        return a
-
+         return f'Название: {self.name}, количество этажей: {self.number_of_floors}'
 
 
 Dom1 = House('ЖК Мирный', 14)
-Dom2 = House('Платан-Строй', 24)
+Domik = House('IzNaKurNozh', 2)
+
+# Dom1.go_to(7)
+# Domik.go_to(3)
 
 print(Dom1)
+print(Domik)
 
 print(len(Dom1))
-print(len(Dom2))
-# Dom1.go_to(7)
+print(len(Domik))
