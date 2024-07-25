@@ -16,3 +16,5 @@ Domik = House('IzNaKurNozh', 2)
 
 Dom1.go_to(7)
 Domik.go_to(3)
+
+
