@@ -5,35 +5,47 @@ class UrTube:
         self.current_user = []
 
     def register(self, nickname, password, age):
-        for i in range(len(ur.users)):
-            if (nickname == getattr(ur.users[i], 'nickname') and
-                    hash(password) == getattr(ur.users[i], 'password') and
-                    age == getattr(ur.users[i], 'age')):
+        for i in range(len(self.users)):
+            if (nickname == getattr(self.users[i], 'nickname') and
+                    hash(password) == getattr(self.users[i], 'password') and
+                    age == getattr(self.users[i], 'age')):
                 print(f'Пользователь {nickname} уже существует')
             else:
-                if i == len(ur.users) - 1:
+                if i == len(self.users) - 1:
                     self.current_user = User(nickname, password, age)
                     self.users.append(self.current_user)
+        return self.current_user
 
     def log_in(self, nickname, password):
-        for i in range(len(ur.users)):
-            if nickname == getattr(ur.users[i], 'nickname') and hash(password) == getattr(ur.users[i], 'password'):
+        for i in range(len(self.users)):
+            if nickname == getattr(self.users[i], 'nickname') and hash(password) == getattr(self.users[i], 'password'):
                 print(f'Вход выполнен, {nickname}')
-                ur.current_user = ur.users[i]
+                self.current_user = self.users[i]
                 break
             else:
-                if i == len(ur.users)-1:
+                if i == len(self.users)-1:
                     print('Нет такого пользователя, зарегистрируйтесь!')
-        return ur.current_user
+        return self.current_user
+
+    def log_out(self):
+        self.current_user = None
+
+    def add(self, *args):
+        for i in args:
+            if len(self.videos) != 0:
+                for j in range(len(self.videos)):
+                    if i.title != getattr(self.videos[j], 'title'):
+                        self.videos.append(i)
+            else:
+                self.videos.append(i)
+
 
 
 class Video:
 
-    def __init__(self, title, duration, time_now, adult_mode):
+    def __init__(self, title, duration, time_now=0, adult_mode=False):
         self.title = title
         self.duration = duration
-        time_now = 0
-        adult_mode = False
 
     def __str__(self):
         return (f'Название: {self.title}, Продолжительность: {self.duration},'
@@ -53,29 +65,7 @@ class User:
 
 if __name__ == '__main__':
     ur = UrTube()
-    #
-    # while True:
-    # choice = int(input('Здравствуйте! Выберите действие: \n1 - Вход\n2 - Регистрация\n'))
-    # if choice == 1:
-    #     ur.register('nickname', 'password', 22)
-    #     if ur.current_user in ur.users:
-    #         print(f'Вход выполнен, {ur.current_user.nickname}')
-    #     #         break
-    #     #     else:
-    #     #         print('Неверный пароль')
-    #     # else:
-    #     #     print('Пользователь не найден')
-    # # if choice == 2:
-    # #     user = User(input('Введите логин:'), password := input('Введите пароль:'),
-    # #                 password2 := input('Подтвердите пароль:'))
-    # #     # if len(password) < 4:
-    # #     #     print('короткий пароль')
-    # #     if password != password2:
-    # #         print('Пароли не совпадают, пробуйте еще')
-    # #         continue
-    # #     database.add_user(user.username, user.password)
-    # # print(database.data)
-    #
+
     user1 = User('Семен', 'dgld',25)
     ur.users.append(user1)
     user2 = User('Герхардт', 'gdcle', 34)
@@ -84,12 +74,18 @@ if __name__ == '__main__':
     ur.users.append(user3)
     print(len(ur.users))
 
-
     ur.register('Рупрехт', 'wtnd', 33)
     print(len(ur.users))
     ur.log_in('Семе', 'dgld')
     print(len(ur.users))
 
+    v1 = Video('Лучший язык программирования 2024 года', 200)
+    v2 = Video('Для чего девушкам парень-программист?', 10, adult_mode=True)
+    v3 = Video('Лучший язык программирования 2024 года', 2)
+
+    ur.add(v1, v2, v3, v1, v3)
+
+    print(len(ur.videos))
 
 
 
