@@ -5,12 +5,15 @@ class UrTube:
         self.current_user = []
 
     def register(self, nickname, password, age):
-        hpass = hash(password)
-        if nickname in self.users:
-            print(f'Пользователь {nickname} уже существует')
-        else:
-            self.current_user = User(nickname, hpass, age)
-            self.users.append(self.current_user)
+        for i in range(len(ur.users)):
+            if (nickname == getattr(ur.users[i], 'nickname') and
+                    hash(password) == getattr(ur.users[i], 'password') and
+                    age == getattr(ur.users[i], 'age')):
+                print(f'Пользователь {nickname} уже существует')
+            else:
+                if i == len(ur.users) - 1:
+                    self.current_user = User(nickname, password, age)
+                    self.users.append(self.current_user)
 
     def log_in(self, nickname, password):
         for i in range(len(ur.users)):
@@ -21,7 +24,7 @@ class UrTube:
             else:
                 if i == len(ur.users)-1:
                     print('Нет такого пользователя, зарегистрируйтесь!')
-
+        return ur.current_user
 
 
 class Video:
@@ -79,15 +82,16 @@ if __name__ == '__main__':
     ur.users.append(user2)
     user3 = User('Рупрехт', 'wtnd', 33)
     ur.users.append(user3)
+    print(len(ur.users))
 
 
-    ur.log_in('Семен', 'dgld')
+    ur.register('Рупрехт', 'wtnd', 33)
+    print(len(ur.users))
+    ur.log_in('Семе', 'dgld')
+    print(len(ur.users))
 
-    # print(ur.users)
-    # print(user1 in ur.users)
-    # print(user2 in ur.users)
-    # for i in range(len(ur.users)):  #такая вот конструкция родилась
-    #     print(getattr(ur.users[i], 'nickname'))
+
+
 
     # print(ur.users[0])
     # print('Семен' in ur.users[0])
